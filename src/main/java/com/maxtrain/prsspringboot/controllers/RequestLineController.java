@@ -80,7 +80,7 @@ public class RequestLineController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public String deleteById(@PathVariable int id) {
+	public RequestLine deleteById(@PathVariable int id) {
 		RequestLine requestLine = new RequestLine();
 		Optional<RequestLine> optionalRequestLine = requestLineRepo.findById(id);
 		
@@ -89,10 +89,9 @@ public class RequestLineController {
 			Request request = requestLine.getRequest();
 			requestLineRepo.deleteById(id);
 			recalculateTotal(request);
-			return "RequestLine deleted";
 		}
 		
-		return "The specified RequestLine could not be found";
+		return requestLine;
 	}
 	
 	@GetMapping("/lines-for-request/{id}")

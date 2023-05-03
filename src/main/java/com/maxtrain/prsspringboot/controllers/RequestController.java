@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.maxtrain.prsspringboot.entities.Request;
+import com.maxtrain.prsspringboot.entities.User;
 import com.maxtrain.prsspringboot.repositories.RequestRepository;
 
 @RestController
@@ -78,10 +79,20 @@ public class RequestController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public String deleteById(@PathVariable int id) {
-		requestRepo.deleteById(id);
-		return "Request deleted";
+	public Request deleteById(@PathVariable int id) {
+		Request request = new Request();
+		Optional<Request> optionalRequest = requestRepo.findById(id);
+		
+		boolean requestExists = optionalRequest.isPresent();
+		
+		if(requestExists) {
+			request = optionalRequest.get();
+			requestRepo.deleteById(id);
+		}
+		
+		return request;
 	}
+	
 	
 	@GetMapping("/list-review/{userId}")
 	public List<Request> getAllForReview(@PathVariable int userId) {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.maxtrain.prsspringboot.entities.User;
 import com.maxtrain.prsspringboot.entities.Vendor;
 import com.maxtrain.prsspringboot.repositories.VendorRepository;
 
@@ -69,8 +70,17 @@ public class VendorController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public String deleteById(@PathVariable int id) {
-		vendorRepo.deleteById(id);
-		return "Vendor deleted";
+	public Vendor deleteById(@PathVariable int id) {		
+		Vendor vendor = new Vendor();
+		Optional<Vendor> optionalVendor = vendorRepo.findById(id);
+		
+		boolean vendorExists = optionalVendor.isPresent();
+		
+		if(vendorExists) {
+			vendor = optionalVendor.get();
+			vendorRepo.deleteById(id);
+		}
+		
+		return vendor;
 	}
 }

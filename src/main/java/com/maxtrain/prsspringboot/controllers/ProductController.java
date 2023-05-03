@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.maxtrain.prsspringboot.entities.Product;
+import com.maxtrain.prsspringboot.entities.User;
 import com.maxtrain.prsspringboot.repositories.ProductRepository;
 
 @RestController
@@ -68,8 +69,17 @@ public class ProductController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public String deleteById(@PathVariable int id) {
-		productRepo.deleteById(id);
-		return "Product deleted";
+	public Product deleteById(@PathVariable int id) {
+		Product product = new Product();
+		Optional<Product> optionalProduct = productRepo.findById(id);
+		
+		boolean productExists = optionalProduct.isPresent();
+		
+		if(productExists) {
+			product = optionalProduct.get();
+			productRepo.deleteById(id);
+		}
+		
+		return product;
 	}
 }
