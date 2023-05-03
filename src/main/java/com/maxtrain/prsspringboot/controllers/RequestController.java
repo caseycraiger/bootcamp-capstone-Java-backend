@@ -1,6 +1,7 @@
 package com.maxtrain.prsspringboot.controllers;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.maxtrain.prsspringboot.entities.Request;
-import com.maxtrain.prsspringboot.entities.User;
 import com.maxtrain.prsspringboot.repositories.RequestRepository;
 
 @RestController
